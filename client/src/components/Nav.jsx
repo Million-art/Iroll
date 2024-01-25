@@ -13,7 +13,9 @@ const RemotEmployeesNav = () => {
   };
   return (
     <nav className="bg-gray-800 p-4 h-[80px] flex flex-center">
+
       <div className="container mx-auto flex justify-between items-center">
+        <div className="text-white text-2xl font-bold lg:text-[20px]"><a href='/' className='text-1xl'><b className='text-3xl text-yellow-500'>i</b>ROLL</a></div>
          
          <ul className={`lg:flex space-x-4 ${isMenuOpen ? 'hidden lg:flex' : 'hidden'}`}>
          <li  className="text-red-600 bg-white border rounded-lg block py-1 px-4 hover:bg-slate-100" onClick={handleLogout}>
