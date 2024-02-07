@@ -6,7 +6,7 @@ const pool = mysql.createPool({
     password: '',
     database: 'blih_attendance',
     waitForConnections: true,
-    connectionLimit: 10, // You can adjust this number based on your requirements
+    connectionLimit: 10, 
     queueLimit: 0
 });
 

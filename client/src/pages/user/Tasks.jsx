@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { apiBaseUrl } from '../../constant';
 const Tasks = () => {
 
     const user = JSON.parse(localStorage.getItem('user')) || {}; // Parse the stored JSON
     const email = user.email
-    const apiBaseUrl = 'http://localhost:3001/';
-  const [avilableTasks, setavilableTasks] = useState([]);
+   const [avilableTasks, setavilableTasks] = useState([]);
   const [filteredavilableTasks, setFilteredavilableTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState('All'); // Default to show all avilableTasks
 

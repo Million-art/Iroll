@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faUserPlus, faMagic  } from '@fortawesome/free-solid-svg-icons'; // Import icons
-
+import { apiBaseUrl } from '../../constant';
 const AddRemotEmployee = () => {
-   const apiBaseUrl = 'http://localhost:3001';  
 
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
-    email: '',
+    username: '',
      password: '',
      role:'',
    });
@@ -51,7 +50,7 @@ const AddRemotEmployee = () => {
         setFormData({
           first_name: '',
           last_name: '',
-          email: '',
+          username: '',
           password: '',
           role:'',
         });
@@ -91,11 +90,11 @@ const AddRemotEmployee = () => {
             required
           />
 
-          <label className="block mb-2">Email:</label>
+          <label className="block mb-2">username:</label>
           <input
-            type="email"
-            name="email"
-            value={formData.email}
+            type="username"
+            name="username"
+            value={formData.username}
             onChange={handleInputChange}
             className="border p-2 mb-4 w-full"
             required

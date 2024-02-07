@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { apiBaseUrl } from '../../constant';
 const ViewTask = () => {
   const [tasks, setTasks] = useState([]);
   const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
-  const apiBaseUrl = 'http://localhost:3001';
-
+ 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -49,8 +48,13 @@ const ViewTask = () => {
   };
   
   const formatDateTime = (dateTimeString) => {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-    return new Date(dateTimeString).toLocaleString('en-US', options);
+    if(dateTimeString === null)
+    return 'null';
+    else{
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      return new Date(dateTimeString).toLocaleString('en-US', options);
+    }
+ 
   };
 
   const getStatusColor = (status) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { apiBaseUrl } from '../../constant';
 const UpdateDeleteTask = () => {
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
@@ -17,8 +17,7 @@ const UpdateDeleteTask = () => {
   const [admin, setAdmin] = useState([]);   
 
 
-  const apiBaseUrl = 'http://localhost:3001';
-   useEffect(() => {
+    useEffect(() => {
     const fetchTasks = async () => {
       try {
         const response = await axios.get(`${apiBaseUrl}/tasks/task`);
@@ -67,22 +66,28 @@ const UpdateDeleteTask = () => {
 };
 
   
-  const handleConfirmUpdate = async () => {
-    try {
-      // Update editingTask fields before sending the update request
-      const updatedTask = { ...editingTask, description: taskDescription };
-      await axios.put(`${apiBaseUrl}/tasks/task/${editingTask.id}`, updatedTask);
+const handleConfirmUpdate = async () => {
+  try {
+    // Update editingTask fields before sending the update request
+    const updatedTask = {
+      ...editingTask,
+      description: taskDescription,
+      // Add other fields that need to be updated
+    };
 
-      // Close the popup
-      setPopupVisible(false);
+    await axios.put(`${apiBaseUrl}/tasks/task/${editingTask.id}`, updatedTask);
 
-      // Fetch updated tasks and update state
-      const response = await axios.get(`${apiBaseUrl}/tasks/task`);
-      setTasks(response.data);
-    } catch (error) {
-      console.error('Error updating task:', error);
-    }
-  };
+    // Close the popup
+    setPopupVisible(false);
+
+    // Fetch updated tasks and update state
+    const response = await axios.get(`${apiBaseUrl}/tasks/task`);
+    setTasks(response.data);
+  } catch (error) {
+    console.error('Error updating task:', error);
+  }
+};
+
 
   const handleCancelUpdate = () => {
     // Close the popup
@@ -148,22 +153,24 @@ const UpdateDeleteTask = () => {
                         Task Description:
                     </label>
                     <textarea
-                        id="taskDescription"
-                        value={editingTask.description}
-                        onChange={(e) => setTaskDescription(e.target.value)}
-                        className="mt-1 p-2 w-full border rounded-md"
+                    id="taskDescription"
+                    value={taskDescription} // Use taskDescription state
+                    onChange={(e) => setTaskDescription(e.target.value)} // Update taskDescription state
+                    className="mt-1 p-2 w-full border rounded-md"
                     />
+
                     </div>
                     <div>
                     <label htmlFor="employeeList" className="block text-sm font-medium text-gray-600">
                         Assign To:
                     </label>
                     <select
-                        id="employeeList"
-                        value={editingTask.selectedEmployee}
-                        onChange={(e) => setSelectedEmployee(e.target.value)}
-                        className="mt-1 p-2 w-full border rounded-md"
+                      id="employeeList"
+                      value={selectedEmployee} // Update selectedEmployee state
+                      onChange={(e) => setSelectedEmployee(e.target.value)}
+                      className="mt-1 p-2 w-full border rounded-md"
                     >
+
                         <option value="">Select Employee</option>
                         {employees.map((employee, index) => (
                         <option key={index} value={employee}>
@@ -177,11 +184,12 @@ const UpdateDeleteTask = () => {
                         Assign By:
                     </label>
                     <select
-                        id="assignByList"
-                        value={editingTask.selectedAdmin}
-                        onChange={(e) => setSelectedAdmin(e.target.value)}
-                        className="mt-1 p-2 w-full border rounded-md"
+                      id="assignByList"
+                      value={selectedAdmin} // Update selectedAdmin state
+                      onChange={(e) => setSelectedAdmin(e.target.value)}
+                      className="mt-1 p-2 w-full border rounded-md"
                     >
+
                         <option value="">Select Admin</option>
                         {admin.map((admin, index) => (
                         <option key={index} value={admin}>
@@ -261,12 +269,13 @@ const UpdateDeleteTask = () => {
                             Enter Estimate Hours:
                         </label>
                         <input
-                            type="number"
-                            id="otherEstimateHours"
-                            value={otherEstimateHours}
-                            onChange={(e) => setOtherEstimateHours(e.target.value)}
-                            className="mt-1 p-2 w-full border rounded-md"
+                          type="number"
+                          id="otherEstimateHours"
+                          value={otherEstimateHours}
+                          onChange={(e) => setOtherEstimateHours(e.target.value)}
+                          className="mt-1 p-2 w-full border rounded-md"
                         />
+
                         </div>
                     )}
                     </div>

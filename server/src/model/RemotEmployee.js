@@ -3,10 +3,10 @@ const pool = require('../../connection');
 
 const RemotEmployee = {
 
-    authenticate: (email,password) => {
+    authenticate: (username,password) => {
          return new Promise((resolve, reject) => {
-          const selectQuery = 'SELECT * FROM remot_employees  WHERE email = ? && password = ?';
-          pool.query(selectQuery, [email,password], (err, results) => {
+          const selectQuery = 'SELECT * FROM remot_employees  WHERE username = ? && password = ?';
+          pool.query(selectQuery, [username,password], (err, results) => {
             if (err) {
               reject(err);
             } else {
@@ -34,10 +34,10 @@ const RemotEmployee = {
         });
       },
       
-      getEmployeeByEmail: (email) => {
+      getEmployeeByUsername: (username) => {
         return new Promise((resolve, reject) => {
-          const query = 'SELECT * FROM remot_employees WHERE email = ?';
-          pool.query(query, [email], (err, results) => {
+          const query = 'SELECT * FROM remot_employees WHERE username = ?';
+          pool.query(query, [username], (err, results) => {
             if (err) {
               reject(err);
             } else {
@@ -60,7 +60,7 @@ const RemotEmployee = {
       },
       updateEmployee: (id, employeeData) => {
          return new Promise((resolve, reject) => {
-          const query = 'UPDATE remot_employees SET ? WHERE employee_id = ?';
+          const query = 'UPDATE remot_employees SET ? WHERE id = ?';
           pool.query(query, [employeeData, id], (err, results) => {
             if (err) {
               reject(err);
@@ -72,7 +72,7 @@ const RemotEmployee = {
       },
       deleteEmployee: (id) => {
         return new Promise((resolve, reject) => {
-          const query = 'DELETE FROM remot_employees WHERE employee_id = ?';
+          const query = 'DELETE FROM remot_employees WHERE id = ?';
           pool.query(query, [id], (err, results) => {
             if (err) {
               reject(err);

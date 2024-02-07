@@ -1,43 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { apiBaseUrl } from '../constant';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+     e.preventDefault();
 
     try {
-      if (!email || !password) {
-        setError('Please enter both email and password.');
+      if (!username || !password) {
+        setError('Please enter both username and password.');
         return;
       }
 
       setLoading(true);
       setError('');
+      setSuccessMessage('');
 
-      const RemotEmployeeLoginResponse = await axios.post(
-        'http://localhost:3001/remotemployee/login',
-        { email, password },
+      const response = await axios.post(
+        `${apiBaseUrl}/remotemployee/login`,
+        { username, password },
         { headers: { 'Content-Type': 'application/json; charset=utf-8' } }
       );
 
-      const employee = RemotEmployeeLoginResponse.data.user;
-      localStorage.setItem('user', JSON.stringify(employee));
+      const { user } = response.data;
 
-      if (employee && employee.role === 'admin') {
+      localStorage.setItem('user', JSON.stringify(user));
+
+      if (user && user.role === 'admin') {
         navigate('/admin');
-      }
-      else{
+      } else {
         navigate('/');
-
       }
+
+      setSuccessMessage('Login successful!');
     } catch (error) {
+      setError('Error during login. Please try again.');
       console.error('Error during login:', error);
     } finally {
       setLoading(false);
@@ -47,14 +52,14 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-800">
       <div className="bg-black p-8 shadow-md rounded-md w-96">
-        <h1 className='text-white text-2xl text-center mb-5'>Login</h1>
+        <h1 className="text-white text-2xl text-center mb-5">Login</h1>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-gray-600 text-sm font-semibold mb-2">Email</label>
+            <label className="block text-gray-600 text-sm font-semibold mb-2">username</label>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -69,7 +74,8 @@ const LoginPage = () => {
             />
           </div>
 
-          <div className="text-red-500 mb-4">{error}</div>
+          <div className="text-red-500 mb-2">{error}</div>
+          <div className="text-green-500 mb-2">{successMessage}</div>
 
           <button
             type="submit"

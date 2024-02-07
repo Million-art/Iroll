@@ -4,7 +4,7 @@ const TaskController = require('../controllers/taskController');
 
 // Define routes for RouterIpAddress
 router.get('/task', TaskController.getAllTasks);
-router.get('/task:email', TaskController.getTaskByEmail);
+router.get('/task:username', TaskController.getTaskByUsername);
 router.post('/task', TaskController.addTask);
  router.put('/task/:id', TaskController.updateTask);
 router.delete('/task/:id', TaskController.deleteTask);

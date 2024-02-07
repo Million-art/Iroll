@@ -7,19 +7,20 @@ const task = {
             pool.query(sql, (err, results) => {
                 if (err) {
                     console.error('Error in getAllTasks:', err);
-                    reject(err);
+                     reject(err);
                 } else {
                     resolve(results);
+                    
                 }
             });
         });
     },
-    getTaskByEmail: (email) => {
-        return new Promise((resolve, reject) => {
+    getTaskByUsername: (username) => {
+         return new Promise((resolve, reject) => {
             const sql = 'SELECT * FROM task WHERE assign_to = ?';
-            pool.query(sql, [email], (err, results) => {
+            pool.query(sql, [username], (err, results) => {
                 if (err) {
-                    console.error('Error in getTaskByEmail:', err);
+                    console.error('Error in getTaskByUsername:', err);
                     reject(err);
                 } else {
                     resolve(results);

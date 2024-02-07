@@ -10,10 +10,10 @@ getAllEmployees: async (req, res) => {
       res.status(500).send('Error fetching employees');
     }
   },
-  getEmployeeByEmail: async (req, res) => {
-    const { email } = req.params;
+  getEmployeeByUsername: async (req, res) => {
+    const { username } = req.params;
     try {
-      const employee = await Employee.getEmployeeById(id);
+      const employee = await Employee.getEmployeeByUsername(id);
       if (employee) {
         res.json(employee);
       } else {
@@ -56,11 +56,11 @@ getAllEmployees: async (req, res) => {
     }
   },
   login: async (req, res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
      
     
       try {
-        const user = await Employee.authenticate(email,password);
+        const user = await Employee.authenticate(username,password);
         if (user) {
           res.cookie('user', user);
           res.json({ user });

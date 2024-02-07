@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { apiBaseUrl } from '../../constant';
 const AssignTask = () => {
   const [tasks, setTasks] = useState([]);
   const [employees, setEmployees] = useState([]);
@@ -17,23 +17,21 @@ const AssignTask = () => {
   const [isOtherSelected, setIsOtherSelected] = useState(false);
   const [otherEstimateHours, setOtherEstimateHours] = useState('');
   const [taskPriority, setTaskPriority] = useState(''); 
-   
-  const apiBaseUrl = 'http://localhost:3001';
-
+ 
 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
         const response = await axios.get(`${apiBaseUrl}/remotemployee/employees`);
-        const emails = response.data.map((employee) => employee.email);
-        setEmployees(emails);
+        const usernames = response.data.map((employee) => employee.username);
+        setEmployees(usernames);
 
         // Fetch admins
         const adminResponse = await axios.get(`${apiBaseUrl}/remotemployee/employees`);
         const adminEmployees = adminResponse.data.filter((employee) => employee.role === 'admin');
-        const adminEmails = adminEmployees.map((employee) => employee.email);
+        const adminusernames = adminEmployees.map((employee) => employee.username);
 
-        setAdmin(adminEmails);
+        setAdmin(adminusernames);
       } catch (error) {
         console.error('Error fetching employees from the server:', error);
       }

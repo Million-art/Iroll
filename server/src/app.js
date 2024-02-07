@@ -10,7 +10,8 @@ const port = 3001;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+   }));
 app.use(cookieParser());
 
 

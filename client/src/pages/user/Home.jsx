@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Nav from '../../components/Nav';
 import axios from 'axios';
-
+import { apiBaseUrl } from '../../constant';
 const RemotEmployeesHome = () => {
   const userString = localStorage.getItem('user');
   const user = userString ? JSON.parse(userString) : {};
-  const email = user.email;
+  const username = user.username;
 
   const [tasks, setTasks] = useState([]);
   const [inProgressTaskId, setInProgressTaskId] = useState(null);
@@ -13,15 +13,12 @@ const RemotEmployeesHome = () => {
   const [avilableTasks, setAvilableTasks] = useState([]);
   const [filteredAvilableTasks, setFilteredAvilableTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState('All');
+  const userUsername = user.username;
  
-  const apiBaseUrl = 'http://localhost:3001';
-
-  const userEmail = user.email;
-
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get(`${apiBaseUrl}/tasks/task${userEmail}`);
+        const response = await axios.get(`${apiBaseUrl}/tasks/task${userUsername}`);
         const taskResponse = response.data.filter(task => task.status === "Pending");
         const progressTaskResponse = response.data.filter(task => task.status === "in progress");
     
@@ -34,7 +31,7 @@ const RemotEmployeesHome = () => {
 
     const fetchAvilableTasks = async () => {
       try {
-        const response = await axios.get(`${apiBaseUrl}/tasks/task${userEmail}`);
+        const response = await axios.get(`${apiBaseUrl}/tasks/task${userUsername}`);
 
         setAvilableTasks(response.data);
         setFilteredAvilableTasks(response.data);
@@ -47,7 +44,7 @@ const RemotEmployeesHome = () => {
     fetchTasks();
     fetchAvilableTasks();
     
-  }, [userEmail, email]);
+  }, [userUsername, username]);
 
   useEffect(() => {
     // Apply filtering based on status when statusFilter changes

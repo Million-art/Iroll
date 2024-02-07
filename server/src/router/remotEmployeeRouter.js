@@ -4,7 +4,7 @@ const remotemployeeController = require('../controllers/remotEmployeeController'
 
 // Define routes for employees
 router.get('/employees', remotemployeeController.getAllEmployees);
-router.get('/employees/:email', remotemployeeController.getEmployeeByEmail);
+router.get('/employees/:email', remotemployeeController.getEmployeeByUsername);
 router.post('/employees', remotemployeeController.addEmployee);
 router.put('/employees/:id', remotemployeeController.updateEmployee);
 router.delete('/employees/:id', remotemployeeController.deleteEmployee);
